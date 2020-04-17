@@ -1,10 +1,10 @@
 <p align"center">
   <h1 align="center"><b>NoodleBot</b></h1>
   <p align="center"><a href="#"><img src="images/noodle.png" width="200"></a></p>
-  <h3 align="center">A Simple Discord Bot</h3>
+  <h3 align="center">A Simple Discord Bot Hosted on Heroku</h3>
   <p align="center">A bot with code written as noodly as its name</p>
+  <p align="center"><a href = "https://discordapp.com/oauth2/authorize?client_id=679532777221128213&scope=bot&permissions=8">Invite the Bot Here!</a></p>
 </p>
-
 
 ## About The Bot
 ---
