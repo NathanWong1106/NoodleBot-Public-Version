@@ -48,7 +48,7 @@ The current prefix is a hyphen ("-")
 - <b>gamble [amount]</b>: double or nothing of the specified amount
 - <b>invest [amount]</b>: random multiplier returns the result of {amount * multiplier}
 - <b>steal [@user]</b>: steals currency from the specified user
-- <b>give [@user] [amount]</b>: gives the an amount to the specified user
+- <b>give [@user] [amount]</b>: gives the amount to the specified user
 
 ## Getting Started
 ---
@@ -71,7 +71,7 @@ module.exports = {
 ```sh
 npm init
 ```
-3. To start up the bot, run by in the terminal with:
+3. To start up the bot, run the following in the terminal:
 ```sh
 node bot.js
 ```
