@@ -55,7 +55,7 @@ The current prefix is a hyphen ("-")
 ### Cloning
 - Clone this repository using the cloning button provided or by using the following line in Command Prompt:
 ```sh
-git clone https://github.com/NathanWong1106/NoodleBot.git
+git clone https://github.com/NathanWong1106/NoodleBot-Public-Version.git
 ```
 
 ### Set-Up
