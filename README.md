@@ -76,3 +76,7 @@ npm init
 node bot.js
 ```
 4. Pray that it doesn't crash...
+
+
+
+NOTE: This is a public version of a private repository. Features are not up to date and are prone to bugs.
