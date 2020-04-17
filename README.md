@@ -6,6 +6,9 @@
   <p align="center"><a href = "https://discordapp.com/oauth2/authorize?client_id=679532777221128213&scope=bot&permissions=8">Invite the Bot Here!</a></p>
 </p>
 
+## Invite The Bot
+The NoodleBot is currently being hosted on Heroku. If you don't want to set up the bot yourself, you can use this <a href =  "https://discordapp.com/oauth2/authorize?client_id=679532777221128213&scope=bot&permissions=8">link</a> to invite NoodleBot to your server!
+###### Disclaimer: NoodleBot will require administrator priviledges for planned auto-mod features to be implemented in the future
 ## About The Bot
 ---
 ### Features
