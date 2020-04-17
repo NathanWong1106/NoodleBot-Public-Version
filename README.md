@@ -2,7 +2,7 @@
   <h1 align="center"><b>NoodleBot</b></h1>
   <p align="center"><a href="#"><img src="images/noodle.png" width="200"></a></p>
   <h3 align="center">A Simple Discord Bot</h3>
-  <p align="center">A bot with code written as noodly as it's name</p>
+  <p align="center">A bot with code written as noodly as its name</p>
 </p>
 
 
