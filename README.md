@@ -50,6 +50,13 @@ The current prefix is a hyphen ("-")
 - <b>steal [@user]</b>: steals currency from the specified user
 - <b>give [@user] [amount]</b>: gives the amount to the specified user
 
+#### Moderation
+- <b>addDefaultRole [@role]</b>: adds a default role that is applied on 'member-join' to the guild
+- <b>removeDefaultRole [@role]</b>: removes the specified default role
+- <b>defaultRoles</b>: lists the current default roles of the guild
+- <b>purge [amount]</b>: purges the specified amount of messages from the channel
+
+
 ## Getting Started
 ---
 ### Cloning
