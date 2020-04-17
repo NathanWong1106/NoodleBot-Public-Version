@@ -79,4 +79,4 @@ node bot.js
 
 
 
-NOTE: This is a public version of a private repository. Features are not up to date and are prone to bugs.
+###### NOTE: This is a public version of a private repository. Features are not up to date and are prone to bugs.
