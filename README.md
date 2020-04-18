@@ -79,7 +79,7 @@ git clone https://github.com/NathanWong1106/NoodleBot-Public-Version.git
 module.exports = {
   mongoose_key: 'Your MongoDB API key here',
   discord_key: 'Your Discord bot key here',
-  youtube_api_key: 'Your Google API key here'
+  youtube_api_key: 'Your Google API key here',
   giphy_key: 'Your GIPHY key here'
 }
 ```
