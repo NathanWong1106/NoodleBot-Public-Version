@@ -25,6 +25,7 @@ The NoodleBot is currently being hosted on Heroku. If you don't want to set up t
 - [MongoDB](https://www.mongodb.com/)
 - [NodeJS](https://nodejs.org/en/)
 - [Discord.js](https://discord.js.org/#/)
+- [Axios](https://github.com/axios/axios)
 - [youtube-search](https://github.com/MaxGfeller/youtube-search)
 
 ## Usage
@@ -34,7 +35,11 @@ The current prefix is a hyphen ("-")
 
 #### General
 - <b>ping</b>: responds with 'pong' (why would you use this?)
+- <b>help</b>: links to this README (proper documentation for commands will be written in the future)
 - <b>server</b>: returns an embed message showing basic server info
+- <b>gif [search]</b>: returns an embed message with the gif from GIPHY
+- <b>chuck</b>: spits out a random funny Chuck Norris fact (definitely not fake)
+- <b>covid [country name/tag]</b>: returns an embed message showing the developments of COVID-19 in the specified country
 
 #### Audio
 - <b>join</b>: joins the voice-channel the user is present in
