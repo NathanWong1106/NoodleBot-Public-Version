@@ -15,7 +15,7 @@ module.exports = {
         }
         //If the bot is not currently in a voice channel
         else if (!serverQueue){
-            message.reply("I'm not in a voice channel. Use !join to let me in!");
+            message.reply("I'm not in a voice channel. Use -join to let me in!");
         }
         else if (serverQueue.connection.channel.id !== voiceChannel.id){
             message.channel.send("To skip, you must be in the same channel!")

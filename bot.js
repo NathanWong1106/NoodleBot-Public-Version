@@ -168,7 +168,11 @@ client.on('voiceStateUpdate', (oldState, newState) => {
             return;
         }
 
-    }
-
-    
+    }    
 })
+
+client.on('guildMemberAdd', member => {
+    const giveRoles = require('./util/giveRoles');
+    giveRoles.execute(member, member.guild);
+})
+

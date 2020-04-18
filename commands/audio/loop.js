@@ -12,7 +12,7 @@ module.exports = {
             return;
         }
         else if (!serverQueue){
-            message.reply("I'm not in your voice channel. Use !join to let me in!")
+            message.reply("I'm not in your voice channel. Use -join to let me in!")
             return;
         }
         else if (voiceChannel.id !== serverQueue.connection.channel.id){

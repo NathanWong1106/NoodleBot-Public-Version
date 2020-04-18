@@ -5,7 +5,7 @@ module.exports = {
         serverQueue = queue.get(message.guild.id);
 
         if(!serverQueue){
-            message.channel.send("I'm not in any voice channels in this server. Type !join to let me in!");
+            message.channel.send("I'm not in any voice channels in this server. Type -join to let me in!");
             return;
         }
         else{
