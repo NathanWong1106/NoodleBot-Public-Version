@@ -1,11 +1,14 @@
 <p align"center">
   <h1 align="center"><b>NoodleBot</b></h1>
   <p align="center"><a href="#"><img src="images/noodle.png" width="200"></a></p>
-  <h3 align="center">A Simple Discord Bot</h3>
-  <p align="center">A bot with code written as noodly as it's name</p>
+  <h3 align="center">A Simple Discord Bot Hosted on Heroku</h3>
+  <p align="center">A bot with code written as noodly as its name</p>
+  <p align="center"><a href = "https://discordapp.com/oauth2/authorize?client_id=679532777221128213&scope=bot&permissions=8">Invite the Bot Here!</a></p>
 </p>
 
-
+## Invite The Bot
+The NoodleBot is currently being hosted on Heroku. If you don't want to set up the bot yourself, you can use this <a href =  "https://discordapp.com/oauth2/authorize?client_id=679532777221128213&scope=bot&permissions=8">link</a> to invite NoodleBot to your server!
+###### Disclaimer: NoodleBot will require administrator priviledges for planned auto-mod features to be implemented in the future
 ## About The Bot
 ---
 ### Features
@@ -50,12 +53,19 @@ The current prefix is a hyphen ("-")
 - <b>steal [@user]</b>: steals currency from the specified user
 - <b>give [@user] [amount]</b>: gives the amount to the specified user
 
+#### Moderation
+- <b>addDefaultRole [@role]</b>: adds a default role that is applied on 'member-join' to the guild
+- <b>removeDefaultRole [@role]</b>: removes the specified default role
+- <b>defaultRoles</b>: lists the current default roles of the guild
+- <b>purge [amount]</b>: purges the specified amount of messages from the channel
+
+
 ## Getting Started
 ---
 ### Cloning
 - Clone this repository using the cloning button provided or by using the following line in Command Prompt:
 ```sh
-git clone https://github.com/NathanWong1106/NoodleBot.git
+git clone https://github.com/NathanWong1106/NoodleBot-Public-Version.git
 ```
 
 ### Set-Up
