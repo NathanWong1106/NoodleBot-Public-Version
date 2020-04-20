@@ -15,7 +15,7 @@ The NoodleBot is currently being hosted on Heroku. If you don't want to set up t
 - Audio streaming from YouTube straight to server voice channels
 - Integration with `youtube-search` through the YouTube-Data-API
 - Points system based around the noodle currency
-- Integrated with MongoDB databases to ensure continuity for users between servers
+- Integrated with MongoDB databases (data carries over from different servers)
 
 ### In Progress
 - Additional features for currency
@@ -37,8 +37,6 @@ The current prefix is a hyphen ("-")
 - <b>ping</b>: responds with 'pong' (why would you use this?)
 - <b>help</b>: links to this README (proper documentation for commands will be written in the future)
 - <b>server</b>: returns an embed message showing basic server info
-- <b>gif [search]</b>: returns an embed message with the gif from GIPHY
-- <b>chuck</b>: spits out a random funny Chuck Norris fact (definitely not fake)
 - <b>covid [country name/tag]</b>: returns an embed message showing the developments of COVID-19 in the specified country
 
 #### Audio
@@ -58,11 +56,19 @@ The current prefix is a hyphen ("-")
 - <b>steal [@user]</b>: steals currency from the specified user
 - <b>give [@user] [amount]</b>: gives the amount to the specified user
 
+#### Fun
+- <b>meme</b>: returns a random post from r/dankmemes (250+ updoots)
+- <b>r [subredditName]</b>: returns a random post from the specified subreddit (250+ updoots)
+- <b>gif [search]</b>: returns an embed message with the gif from GIPHY
+- <b>chuck</b>: spits out a random funny Chuck Norris fact (definitely not fake)
+
 #### Moderation
 - <b>addDefaultRole [@role]</b>: adds a default role that is applied on 'member-join' to the guild
 - <b>removeDefaultRole [@role]</b>: removes the specified default role
 - <b>defaultRoles</b>: lists the current default roles of the guild
 - <b>purge [amount]</b>: purges the specified amount of messages from the channel
+- <b>bind</b>: binds the bot to the channel the message was sent in
+- <b>unbind</b>: unbinds the bot from the channel the message was sent in
 
 
 ## Getting Started
@@ -74,13 +80,20 @@ git clone https://github.com/NathanWong1106/NoodleBot-Public-Version.git
 ```
 
 ### Set-Up
-1. In `config/keys.js` fill in each API key with your own unique key from Discord, MongoDB, Google, and Giphy:
+1. In `config/keys.js` fill in each API key with your own unique key from Discord, MongoDB, Google, Giphy, and Reddit:
 ```JS
 module.exports = {
   mongoose_key: 'Your MongoDB API key here',
   discord_key: 'Your Discord bot key here',
   youtube_api_key: 'Your Google API key here',
-  giphy_key: 'Your GIPHY key here'
+  giphy_key: 'Your GIPHY key here',
+  reddit: {
+		userAgent: 'Discord Bot',
+		clientId: 'Your Reddit client ID here',
+		clientSecret: 'Your Reddit client secret here',
+		username: 'Your Reddit account name here',
+		password: 'Your Reddit account password here'
+	}
 }
 ```
 2. Install NPM packages / node_modules:
