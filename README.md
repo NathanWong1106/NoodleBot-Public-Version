@@ -85,7 +85,7 @@ module.exports = {
 ```
 2. Install NPM packages / node_modules:
 ```sh
-npm init
+npm install
 ```
 3. To start up the bot, run the following in the terminal:
 ```sh
