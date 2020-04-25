@@ -9,7 +9,7 @@
 ## Invite The Bot
 The NoodleBot is currently being hosted on Heroku. If you don't want to set up the bot yourself, you can use this <a href =  "https://discordapp.com/oauth2/authorize?client_id=679532777221128213&scope=bot&permissions=8">link</a> to invite NoodleBot to your server!
 ###### Disclaimer: NoodleBot will require administrator priviledges for planned auto-mod features to be implemented in the future
-###### Important: Make sure the NoodleBot Role is above all other roles on your channel in order for default roels to work!
+###### Important: Make sure the NoodleBot Role is above all other roles on your channel in order for default roles to work!
 ## About The Bot
 ---
 ### Features
