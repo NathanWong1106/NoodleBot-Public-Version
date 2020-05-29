@@ -5,7 +5,7 @@ const keys = require('./config/keys');
 const User = require('./models/user-model');
 const Guild = require('./models/guild-model');
 const fs = require('fs'); //file system
-const PREFIX = "-";
+const PREFIX = '-';
 const client = new Discord.Client();
 const timer = require('./recursive/timer');
 
@@ -21,158 +21,213 @@ global.queue = new Map();
 
 //Key: userID, Value: Object containing info of gameTime --decremented by timer
 //GLOBAL --used anywhere
-global.members = new Map()
+global.members = new Map();
+
+//KEY: guildID, Value: Array of allowed channels --if the array is empty, all channels will be allowed --reduces the need for calls to the DB
+//GLOBAL --used anywhere
+//TODO: remove inactive servers after 20 minutes without messages (reduce memory usage)
+global.boundChannels = new Map();
 
 //creates an array of all files in the commands directory
-const generalFiles = fs.readdirSync('./commands/general').filter(file => file.endsWith('js'));
-const audioFiles = fs.readdirSync('./commands/audio').filter(file => file.endsWith('js'));
-const moderationFiles = fs.readdirSync('./commands/moderation').filter(file => file.endsWith('js'));
-const currencyFiles = fs.readdirSync('./commands/currency').filter(file => file.endsWith('js'));
-const updateFiles = fs.readdirSync('./data/general').filter(file => file.endsWith('js'));
+const generalFiles = fs.readdirSync('./commands/general').filter((file) => file.endsWith('js'));
+const audioFiles = fs.readdirSync('./commands/audio').filter((file) => file.endsWith('js'));
+const moderationFiles = fs.readdirSync('./commands/moderation').filter((file) => file.endsWith('js'));
+const currencyFiles = fs.readdirSync('./commands/currency').filter((file) => file.endsWith('js'));
+const updateFiles = fs.readdirSync('./data/general').filter((file) => file.endsWith('js'));
 
 //Creates a collection of commands --command name as the key and the command as the value
-for (const file of generalFiles){
-    const command = require(`./commands/general/${file}`);
-    client.commands.set(command.name, command);
+for (const file of generalFiles) {
+	const command = require(`./commands/general/${file}`);
+	client.commands.set(command.name, command);
 }
-for (const file of audioFiles){
-    const command = require(`./commands/audio/${file}`);
-    client.commands.set(command.name, command);
+for (const file of audioFiles) {
+	const command = require(`./commands/audio/${file}`);
+	client.commands.set(command.name, command);
 }
-for (const file of moderationFiles){
-    const command = require(`./commands/moderation/${file}`);
-    client.commands.set(command.name, command);
+for (const file of moderationFiles) {
+	const command = require(`./commands/moderation/${file}`);
+	client.commands.set(command.name, command);
 }
-for (const file of currencyFiles){
-    const command = require(`./commands/currency/${file}`);
-    client.commands.set(command.name, command);
+for (const file of currencyFiles) {
+	const command = require(`./commands/currency/${file}`);
+	client.commands.set(command.name, command);
 }
 
 //Creates a collection of commands for the database --command name as the key and the command as the value
-for (const file of updateFiles){
-    const update = require(`./data/general/${file}`);
-    client.updates.set(update.name, update);
+for (const file of updateFiles) {
+	const update = require(`./data/general/${file}`);
+	client.updates.set(update.name, update);
 }
 
 client.once('ready', async () => {
-    console.log('READY!');
-    
-    client.guilds.cache.forEach(guild => {
-        client.updates.get('startUp').execute(guild);
-    })
-    
-    timer.execute();
-})
+	console.log('READY!');
 
-//on receiving a message
-client.on('message', message => {
-    //ignore bot messages and messages that start without the prefix {!}
-    if (!message.content.startsWith(PREFIX) || message.author.bot) return;
+	client.guilds.cache.forEach((guild) => {
+		client.updates.get('startUp').execute(guild);
+	});
 
-    //args contain an array of all strings within the message split by whitespace --ignores 0th index (prefix) --regex
-    const args = message.content.slice(PREFIX.length).split(/ +/);
-    
-    //shift removes and returns the first element in the array
-	const command = args.shift().toLowerCase();
+	timer.execute();
+});
 
-    //check if commands contains the key
-	if (!client.commands.has(command)) return;
-
-    //execute the command --pass in message and arguments
+//executes the chosen command
+const executeCommand = (message, args, client, command) => {
 	try {
 		client.commands.get(command).execute(message, args, client);
 	} catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
-    }
-})
+	}
+};
+
+//on receiving a message
+client.on('message', (message) => {
+	//ignore bot messages and messages that start without the prefix {!}
+	if (!message.content.startsWith(PREFIX) || message.author.bot) return;
+
+	//args contain an array of all strings within the message split by whitespace --ignores 0th index (prefix) --regex
+	const args = message.content.slice(PREFIX.length).split(/ +/);
+
+	//shift removes and returns the first element in the array
+	const command = args.shift().toLowerCase();
+
+	//check if commands contains the key
+	if (!client.commands.has(command)) return;
+
+	//moderation commands can be used globally
+	if (client.commands.get(command).type !== 'moderation') {
+		//check if the bound channels for the guild have been stored in memory
+		if (!boundChannels.get(message.guild.id)) {
+			Guild.findOne({ guildID: message.guild.id })
+				.then((guildDB) => {
+					boundChannels.set(guildDB.guildID, { binded: guildDB.guildAllowedChannels });
+
+					//All channels will be responsive if the user has not set any binded channels
+					if (boundChannels.get(message.guild.id).binded.length === 0) {
+						//execute the command --pass in message and arguments
+						executeCommand(message, args, client, command);
+					} else {
+						//check if it is bound
+						boundChannels.get(message.guild.id).binded.forEach((channel) => {
+							if (channel.channelID === message.channel.id) {
+								//execute the command --pass in message and arguments
+								executeCommand(message, args, client, command);
+							}
+						});
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		} else {
+			//All channels will be responsive if the user has not set any binded channels
+			if (boundChannels.get(message.guild.id).binded.length === 0) {
+				//execute the command --pass in message and arguments
+				executeCommand(message, args, client, command);
+			} else {
+				boundChannels.get(message.guild.id).binded.forEach((channel) => {
+					if (channel.channelID === message.channel.id) {
+						//execute the command --pass in message and arguments
+						executeCommand(message, args, client, command);
+					}
+				});
+			}
+		}
+	} else {
+		//Set the bound channels into memory
+		if (!boundChannels.get(message.guild.id)) {
+			Guild.findOne({ guildID: message.guild.id }).then((guildDB) => {
+				boundChannels.set(guildDB.guildID, { binded: guildDB.guildAllowedChannels });
+			});
+		}
+
+		executeCommand(message, args, client, command);
+	}
+});
 
 //login the client
 client.login(keys.discord_key);
 
 /*--------------------------------MongoDB Login---------------------------------*/
-mongoose.connect(keys.mongoose_key, {useNewUrlParser:true, useUnifiedTopology: true})
-.then(() => {
-    console.log('Connected to MongoDB');
-})
-.catch(err => {
-    console.log(err);
-});
+mongoose
+	.connect(keys.mongoose_key, { useNewUrlParser: true, useUnifiedTopology: true })
+	.then(() => {
+		console.log('Connected to MongoDB');
+	})
+	.catch((err) => {
+		console.log(err);
+	});
 /*------------------------------------------------------------------------------*/
 
 //on joining a guild
-client.on('guildCreate', guild => {
-    client.updates.get('GuildCreate').execute(guild);
-})
+client.on('guildCreate', (guild) => {
+	client.updates.get('GuildCreate').execute(guild);
+});
 
 //on removal from a guild
-client.on('guildDelete', guild => {
-    client.updates.get('GuildDelete').execute(guild);
-})
+client.on('guildDelete', (guild) => {
+	client.updates.get('GuildDelete').execute(guild);
+});
 
 //on updating the guild
 client.on('guildUpdate', (oldGuild, newGuild) => {
-    client.updates.get('GuildUpdate').execute(newGuild);
+	client.updates.get('GuildUpdate').execute(newGuild);
 });
 
 //on creation of a new channel
-client.on('channelCreate', channel => {
-    client.updates.get('ChannelUpdate').execute(channel);
+client.on('channelCreate', (channel) => {
+	client.updates.get('ChannelUpdate').execute(channel);
 });
 
 //on deletion of an existing channel
-client.on('channelDelete', channel => {
-    client.updates.get('ChannelUpdate').execute(channel);
+client.on('channelDelete', (channel) => {
+	client.updates.get('ChannelUpdate').execute(channel);
 });
 
 //on update of an existing channel
-client.on('channelUpdate', channel => {
-    client.updates.get('ChannelUpdate').execute(channel);
-})
+client.on('channelUpdate', (channel) => {
+	client.updates.get('ChannelUpdate').execute(channel);
+});
 
 //on creation of a new role
-client.on('roleCreate', role => {
-    client.updates.get('RoleUpdate').execute(role);
+client.on('roleCreate', (role) => {
+	client.updates.get('RoleUpdate').execute(role);
 });
 
 //on deletion of an existing role
-client.on('roleDelete', role => {
-    client.updates.get('RoleUpdate').execute(role);
+client.on('roleDelete', (role) => {
+	client.updates.get('RoleUpdate').execute(role);
 });
 
 //on update of an existing role
-client.on('roleUpdate', role => {
-    client.updates.get('RoleUpdate').execute(role);
-})
+client.on('roleUpdate', (role) => {
+	client.updates.get('RoleUpdate').execute(role);
+});
 
 client.on('voiceStateUpdate', (oldState, newState) => {
-    if (newState.member.id === client.user.id){
-        //the server queue
-        const serverQueue = queue.get(newState.guild.id);
-        //returns null if the bot has been disconnected
-        const newChannel = newState.guild.voice.connection;
+	if (newState.member.id === client.user.id) {
+		//the server queue
+		const serverQueue = queue.get(newState.guild.id);
+		//returns null if the bot has been disconnected
+		const newChannel = newState.guild.voice.connection;
 
-        //async function --await establishment of new channel
-        const establishConnection = async function(){
-            serverQueue.connection = await newState.channel.join();
-        }
-        
-        //if the bot has been disconnected from the voice channel
-        if(!newChannel){
-            queue.delete(newState.guild.id);
-            return;
-        }
-        //if the bot has been moved by an external source to another voice channel
-        else if (serverQueue){
-            establishConnection();
-            return;
-        }
+		//async function --await establishment of new channel
+		const establishConnection = async function() {
+			serverQueue.connection = await newState.channel.join();
+		};
 
-    }    
-})
+		//if the bot has been disconnected from the voice channel
+		if (!newChannel) {
+			queue.delete(newState.guild.id);
+			return;
+		} else if (serverQueue) {
+			//if the bot has been moved by an external source to another voice channel
+			establishConnection();
+			return;
+		}
+	}
+});
 
-client.on('guildMemberAdd', member => {
-    const giveRoles = require('./util/giveRoles');
-    giveRoles.execute(member, member.guild);
-})
-
+client.on('guildMemberAdd', (member) => {
+	const giveRoles = require('./util/giveRoles');
+	giveRoles.execute(member, member.guild);
+});

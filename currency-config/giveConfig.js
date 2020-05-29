@@ -1,3 +1,3 @@
 module.exports = {
-    TIME: 60
-}
+	TIME: 60
+};

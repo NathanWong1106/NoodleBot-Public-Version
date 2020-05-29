@@ -1,4 +1,4 @@
 module.exports = {
-    CHANCE: 2,
-    TIME: 600
-}
+	CHANCE: 2,
+	TIME: 600
+};
