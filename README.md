@@ -72,6 +72,9 @@ The current prefix is a hyphen ("-")
 - <b>unbind</b>: unbinds the bot from the channel the message was sent in
 
 
+Honestly might just work on external documentation somewhere instead of this README... this is definitely not a full list
+
+
 ## Getting Started
 ---
 ### Cloning
