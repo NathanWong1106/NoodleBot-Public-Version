@@ -77,12 +77,6 @@ Honestly might just work on external documentation somewhere instead of this REA
 
 ## Getting Started
 ---
-### Cloning
-- Clone this repository using the cloning button provided or by using the following line in Command Prompt:
-```sh
-git clone https://github.com/NathanWong1106/NoodleBot.git
-```
-
 ### Set-Up
 1. In `config/keys.js` fill in each API key with your own unique key from Discord, MongoDB, Google, Giphy, and Reddit:
 ```JS
@@ -100,6 +94,7 @@ module.exports = {
 	}
 }
 ```
+###### The Youtube API key is no longer needed after switching to `node-ytsr`
 2. Install NPM packages / node_modules:
 ```sh
 npm install
