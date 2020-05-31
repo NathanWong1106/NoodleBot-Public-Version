@@ -26,7 +26,8 @@ The NoodleBot is currently being hosted on Heroku. If you don't want to set up t
 - [NodeJS](https://nodejs.org/en/)
 - [Discord.js](https://discord.js.org/#/)
 - [Axios](https://github.com/axios/axios)
-- [youtube-search](https://github.com/MaxGfeller/youtube-search)
+- [node-ytdl-core](https://github.com/fent/node-ytdl-core)
+- [ytsr](https://github.com/TimeForANinja/node-ytsr)
 
 ## Usage
 ---
