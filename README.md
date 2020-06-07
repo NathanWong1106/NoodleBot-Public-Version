@@ -22,7 +22,9 @@
 - [MongoDB](https://www.mongodb.com/)
 - [NodeJS](https://nodejs.org/en/)
 - [Discord.js](https://discord.js.org/#/)
-- [youtube-search](https://github.com/MaxGfeller/youtube-search)
+- [Axios](https://github.com/axios/axios)
+- [node-ytdl-core](https://github.com/fent/node-ytdl-core)
+- [ytsr](https://github.com/TimeForANinja/node-ytsr)
 
 ## Usage
 ---
@@ -52,12 +54,6 @@ The current prefix is a hyphen ("-")
 
 ## Getting Started
 ---
-### Cloning
-- Clone this repository using the cloning button provided or by using the following line in Command Prompt:
-```sh
-git clone https://github.com/NathanWong1106/NoodleBot.git
-```
-
 ### Set-Up
 1. In `config/keys.js` fill in each API key with your own unique key from Discord, MongoDB, and Google:
 ```JS
@@ -67,6 +63,7 @@ module.exports = {
   youtube_api_key: 'Your Google API key here'
 }
 ```
+###### The Youtube API key is no longer needed after switching to `node-ytsr`
 2. Install NPM packages / node_modules:
 ```sh
 npm init
