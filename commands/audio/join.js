@@ -1,5 +1,3 @@
-const ytdl = require('ytdl-core');
-
 module.exports = {
 	name: 'join',
 	type: 'audio',
@@ -31,8 +29,14 @@ module.exports = {
 				message.reply('I do not have permissions to join/speak in your channel!');
 				return;
 			} else {
-				//establishes a connection with the voice channel
-				const connection = await voiceChannel.join();
+				var connection;
+				try {
+					//establishes a connection with the voice channel
+					connection = await voiceChannel.join();
+				} catch (err) {
+					message.channel.send("Couldn't connect :(");
+					return;
+				}
 
 				if (!serverQueue) {
 					//value stored in the global queue Map()
@@ -49,7 +53,8 @@ module.exports = {
 					};
 
 					//sets the key and value into the global queue Map()
-					queue.set(message.guild.id, queueConstruct);
+					await queue.set(message.guild.id, queueConstruct);
+					message.channel.send('Joining: `' + voiceChannel.name + '`');
 				}
 			}
 		}

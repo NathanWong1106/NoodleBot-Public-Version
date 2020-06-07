@@ -17,7 +17,7 @@ module.exports = {
 				message.channel.send('No songs are playing at the moment!');
 			} else {
 				const song = serverQueue.songs[0];
-				const indexReplace = serverQueue.dispatcher.streamTime / 1000 / song.time * 20;
+				const indexReplace = serverQueue.dispatcher.streamTime / 1000 / song.time * timeVisual.length;
 				const timeVisualReplaced =
 					timeVisual.substr(0, indexReplace) + button + timeVisual.substr(indexReplace + 1);
 

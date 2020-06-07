@@ -20,7 +20,7 @@ module.exports = {
 				} else {
 					if (index < serverQueue.songs.length) {
 						const removed = serverQueue.songs.splice(index, 1);
-						message.channel.send(`Removed ${removed[0].title} from the queue!`);
+						message.channel.send('Removed `' + removed[0].title + '` from the queue!');
 					} else {
 						message.channel.send(`No songs are located in index ${args[0]}`);
 					}

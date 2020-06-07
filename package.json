@@ -15,8 +15,9 @@
     "ffmpeg-static": "^4.1.1",
     "mongoose": "^5.9.6",
     "snoowrap": "^1.21.0",
-    "youtube-search": "^1.1.4",
-    "ytdl-core": "^2.1.4"
+    "ytdl-core": "^2.1.4",
+    "ytpl": "^0.1.21",
+    "ytsr": "^0.1.14"
   },
   "devDependencies": {},
   "scripts": {

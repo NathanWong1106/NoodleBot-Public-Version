@@ -33,9 +33,15 @@ module.exports = {
 						icon_url: client.user.displayAvatarURL()
 					},
 					title: `Now Playing: ${serverQueue.songs[0].title}`,
+					description: `**Songs: ${serverQueue.songs.length} || Duration: ${timeStringAudio.convert(
+						serverQueue.songs[0].time
+					)}**`,
 					url: serverQueue.songs[0].url,
 					thumbnail: {
 						url: serverQueue.songs[0].thumbnail
+					},
+					footer: {
+						text: `Looping Song: ${serverQueue.looping}\nLooping Queue: ${serverQueue.loopingQueue}\n`
 					}
 				};
 
@@ -60,7 +66,7 @@ module.exports = {
 		let position = 1;
 		let index = 0;
 		let lastPage = '';
-		let duration = 0;
+		let duration = serverQueue.songs[0].time;
 
 		queueArr.push('');
 
@@ -104,7 +110,7 @@ module.exports = {
 				'\n\n';
 
 			//make a new page if the characters exceed 1000 on one page of the queue
-			if (queueArr[index].length > 1000) {
+			if (queueArr[index].length > 900) {
 				//revert the current page to the previous version
 				queueArr[index] = lastPage;
 
@@ -142,9 +148,7 @@ module.exports = {
 						name: '>>>**Up Next**<<<',
 						value:
 							queueArr[page - 1] +
-							`\n\n**Songs: ${serverQueue.songs.length} || Duration: ${timeStringAudio.convert(
-								duration
-							)}**`
+							`**Songs: ${serverQueue.songs.length} || Duration: ${timeStringAudio.convert(duration)}**`
 					}
 				],
 				footer: {

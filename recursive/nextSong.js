@@ -8,7 +8,6 @@ module.exports = {
 
 		//if there is no song then halt recursion
 		if (!song) {
-			console.log('No songs left');
 			return;
 		} else {
 			//set the status to playing audio
@@ -16,6 +15,7 @@ module.exports = {
 
 			//establish a dispatcher to the connection --highWaterMark fixes an error where audio cuts off early (no idea why?)
 			const dispatcher = serverQueue.connection
+				//ytdl returns a readable stream that can be played
 				.play(ytdl(song.url, { filter: 'audioonly', highWaterMark: 1 << 25 }))
 				.once('finish', () => {
 					//end doesn't work with this bot (?)
